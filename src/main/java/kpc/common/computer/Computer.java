@@ -7,6 +7,7 @@ import kpc.api.State;
 import kpc.api.fs.FileSystem;
 import kpc.api.fs.io.InputStream;
 import kpc.common.computer.api.FileSystemApi;
+import kpc.common.computer.api.PkgApi;
 import kpc.common.computer.api.PrologApi;
 import kpc.common.computer.api.TerminalApi;
 import kpc.common.computer.fs.Ext9001FileSystem;
@@ -48,6 +49,7 @@ implements kpc.api.computer.Computer,
         this.scheme.define("include", new include(this.fs));
         this.scheme.define("prolog", new PrologApi(this.fs));
         this.scheme.define("str", new strings());
+        this.scheme.define("pkg", new PkgApi(this));
 
         this.scheme.defineFunction("print", new print(this.terminal));
         this.scheme.defineFunction("println", new println(this.terminal));
@@ -154,11 +156,16 @@ implements kpc.api.computer.Computer,
 
     @Override
     public void readFromNBT(NBTTagCompound comp) {
-
+        NBTTagCompound c = comp.getCompoundTag("terminal");
+        this.terminal.readFromNBT(c);
+        this.state = State.valueOf(comp.getString("state") != null ? comp.getString("state") : "OFF");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound comp) {
-
+        NBTTagCompound c = new NBTTagCompound();
+        this.terminal.writeToNBT(c);
+        comp.setTag("terminal", c);
+        comp.setString("state", this.state.name());
     }
 }

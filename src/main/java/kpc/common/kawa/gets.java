@@ -5,6 +5,9 @@ import kpc.api.Signal;
 import kpc.api.computer.OperatingSystem;
 import kpc.api.computer.Terminal;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+
 public final class gets
 extends Procedure1 {
     private final OperatingSystem os;
@@ -29,6 +32,10 @@ extends Procedure1 {
                 this.terminal.setCursorPos(this.terminal.getCursorX() - 1, this.terminal.getCursorY());
                 return this.apply1(((String) arg).substring(0, ((String) arg).length() - 1));
             }
+        } else if(c instanceof String){
+            this.terminal.write(c.toString());
+            this.terminal.setCursorPos(this.terminal.getCursorX() + c.toString().length(), this.terminal.getCursorY());
+            return this.apply1(arg.toString() + c.toString());
         } else{
             this.terminal.write(String.valueOf(c));
             this.terminal.setCursorPos(this.terminal.getCursorX() + String.valueOf(c).length(), this.terminal.getCursorY());
@@ -43,6 +50,14 @@ extends Procedure1 {
                 return null;
             } else if(signal.args()[0].equals("__back__")){
                 return -1;
+            } else if(signal.args()[0].equals("__ctrl__")){
+                return "";
+            } else if(signal.args()[0].equals("__ctrlv__")){
+                try{
+                    return Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+                } catch (Exception e) {
+                    return "";
+                }
             } else{
                 return ((String) signal.args()[0]).charAt(0);
             }

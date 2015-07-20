@@ -92,7 +92,6 @@ public final class KPComputers{
     public void serverStarting(FMLServerStartingEvent e){
         try {
             MountRegistry.mount("/", new Ext9001ResourceMount("root"));
-            MountRegistry.mount("/include", new Ext9001ResourceMount("include"));
             MountRegistry.mount("/bin", new Ext9001ResourceMount("bin"));
             MountRegistry.mount("/usr", new Ext9001UsrMount());
         } catch(IOException e1){

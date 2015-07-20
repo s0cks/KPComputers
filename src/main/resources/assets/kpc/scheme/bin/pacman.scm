@@ -1,0 +1,1 @@
+(pkg:install (args 0) (args 1))

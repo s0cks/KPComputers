@@ -7,6 +7,8 @@ import kpc.api.language.LanguageRuntime;
 import kpc.common.KPComputers;
 import kpc.common.utils.ArgsParser;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -39,6 +41,14 @@ implements kpc.api.computer.OperatingSystem{
             this.computer.terminal().write("Exception: " + throwable.getMessage());
             throwable.printStackTrace(System.err);
             return null;
+        }
+    }
+
+    public String getClipboard(){
+        try {
+            return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+        } catch (Exception e) {
+            return "";
         }
     }
 

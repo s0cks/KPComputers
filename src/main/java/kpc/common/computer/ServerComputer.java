@@ -7,13 +7,15 @@ import kpc.api.computer.OperatingSystem;
 import kpc.api.fs.FileSystem;
 import kpc.common.KPComputers;
 import kpc.common.net.KPCPacket;
+import kpc.common.utils.INBTTaggable;
 import kpc.common.utils.NBTUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
 public final class ServerComputer
-implements kpc.api.computer.Computer {
+implements kpc.api.computer.Computer,
+           INBTTaggable{
     private final int id;
     private final Terminal terminal;
     private final Computer computer;
@@ -140,5 +142,15 @@ implements kpc.api.computer.Computer {
                 break;
             }
         }
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound comp) {
+        this.computer.readFromNBT(comp);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound comp) {
+        this.computer.writeToNBT(comp);
     }
 }

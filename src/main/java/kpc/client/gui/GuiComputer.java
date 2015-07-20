@@ -100,42 +100,62 @@ extends GuiScreen{
         if(code == Keyboard.KEY_UP){
             if(computer != null){
                 computer.queueEvent("char", "__up__", Keyboard.KEY_UP);
+                return;
             }
         }
 
         if(code == Keyboard.KEY_DOWN){
             if(computer != null){
                 computer.queueEvent("char", "__down__", Keyboard.KEY_DOWN);
+                return;
             }
         }
 
         if(code == Keyboard.KEY_LEFT){
             if(computer != null){
                 computer.queueEvent("char", "__left__", Keyboard.KEY_LEFT);
+                return;
             }
         }
 
         if(code == Keyboard.KEY_RIGHT){
             if(computer != null){
                 computer.queueEvent("char", "__right__", Keyboard.KEY_RIGHT);
+                return;
             }
         }
 
         if(code == Keyboard.KEY_TAB){
             if(computer != null){
                 computer.queueEvent("char", "__tab__", Keyboard.KEY_TAB);
+                return;
+            }
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && code == Keyboard.KEY_S){
+            if(computer != null){
+                computer.queueEvent("char", "__ctrls__");
+                return;
+            }
+        }
+
+        if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && code == Keyboard.KEY_V){
+            if(computer != null){
+                computer.queueEvent("char", "__ctrlv__");
+                return;
+            }
+        }
+
+        if((code != Keyboard.KEY_LCONTROL && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) && ChatAllowedCharacters.isAllowedCharacter(c)){
+            if(computer != null){
+                computer.queueEvent("char", Character.toString(c), code);
+                return;
             }
         }
 
         if(code == Keyboard.KEY_LCONTROL){
             if(computer != null){
                 computer.queueEvent("char", "__ctrl__", Keyboard.KEY_LCONTROL);
-            }
-        }
-
-        if(ChatAllowedCharacters.isAllowedCharacter(c)){
-            if(computer != null){
-                computer.queueEvent("char", Character.toString(c), code);
             }
         }
     }

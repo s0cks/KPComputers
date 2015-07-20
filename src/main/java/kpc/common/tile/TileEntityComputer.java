@@ -21,12 +21,20 @@ extends TileEntity{
     public void writeToNBT(NBTTagCompound comp){
         super.writeToNBT(comp);
         comp.setInteger("compId", this.id);
+        ServerComputer computer = this.getServerComputer();
+        if(computer != null){
+            computer.writeToNBT(comp);
+        }
     }
 
     @Override
     public void readFromNBT(NBTTagCompound comp){
         super.readFromNBT(comp);
         this.id = comp.getInteger("compId");
+        ServerComputer computer = this.getServerComputer();
+        if(computer != null){
+            computer.readFromNBT(comp);
+        }
     }
 
     public void interact(EntityPlayer player){
@@ -34,13 +42,6 @@ extends TileEntity{
             this.createServerComputer().turnOn();
             player.openGui(KPComputers.instance, KPGuiHandler.GUI_TERMINAL, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         }
-    }
-
-    @Override
-    public void updateEntity(){
-        super.updateEntity();
-
-
     }
 
     public Computer getComputer(){
