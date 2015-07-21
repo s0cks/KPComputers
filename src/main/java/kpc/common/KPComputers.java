@@ -13,20 +13,15 @@ import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import cpw.mods.fml.common.registry.GameRegistry;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import kpc.api.driver.DriverTypeRegistry;
 import kpc.api.fs.MountRegistry;
-import kpc.common.blocks.BlockBus;
 import kpc.common.blocks.BlockComputer;
-import kpc.common.blocks.BlockDriverInventory;
 import kpc.common.computer.fs.Ext9001ResourceMount;
 import kpc.common.computer.fs.Ext9001UsrMount;
 import kpc.common.core.ClientComputerRegistry;
 import kpc.common.core.ServerComputerRegistry;
 import kpc.common.net.KPCPacket;
 import kpc.common.net.KPCPacketHandler;
-import kpc.common.tile.TileEntityBus;
 import kpc.common.tile.TileEntityComputer;
-import kpc.common.tile.TileEntityDriverInventory;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -54,9 +49,6 @@ public final class KPComputers{
     public static final ClientComputerRegistry clientComputerRegistry = new ClientComputerRegistry();
 
     public static final Block blockComputer = new BlockComputer();
-    public static final Block blockBus8 = new BlockBus(8);
-    public static final Block blockBus16 = new BlockBus(16);
-    public static final Block blockDriverInventory = new BlockDriverInventory();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
@@ -67,13 +59,8 @@ public final class KPComputers{
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
         GameRegistry.registerBlock(blockComputer, "blockComputer");
-        GameRegistry.registerBlock(blockBus8, "blockBus8");
-        GameRegistry.registerBlock(blockBus16, "blockBus16");
-        GameRegistry.registerBlock(blockDriverInventory, "blockDriverInventory");
 
         GameRegistry.registerTileEntity(TileEntityComputer.class, "tileComputer");
-        GameRegistry.registerTileEntity(TileEntityBus.class, "tileBus");
-        GameRegistry.registerTileEntity(TileEntityDriverInventory.class, "tileDriverInventory");
 
         NetworkRegistry.INSTANCE.registerGuiHandler(KPComputers.instance, new KPGuiHandler());
 
@@ -84,8 +71,6 @@ public final class KPComputers{
     public void postInit(FMLPostInitializationEvent e){
         FMLCommonHandler.instance().bus().register(KPCTickHandler.instance());
         MinecraftForge.EVENT_BUS.register(KPCTickHandler.instance());
-
-        DriverTypeRegistry.register("inventory", TileEntityDriverInventory.class);
     }
 
     @Mod.EventHandler

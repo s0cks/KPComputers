@@ -45,6 +45,7 @@ implements kpc.api.computer.Computer,
 
     @Override
     public void shutdown(){
+        this.computer.shutdown();
     }
 
     @Override
