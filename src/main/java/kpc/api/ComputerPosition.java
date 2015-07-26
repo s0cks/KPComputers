@@ -27,6 +27,10 @@ public final class ComputerPosition{
     }
 
     public TileEntity tile(ForgeDirection dir){
+        if(dir == ForgeDirection.UNKNOWN){
+            return null;
+        }
+
         return this.world.getTileEntity(this.x + dir.offsetX, this.y + dir.offsetY, this.z + dir.offsetZ);
     }
 

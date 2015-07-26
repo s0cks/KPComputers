@@ -1,5 +1,7 @@
 package kpc.common.kawa;
 
+import java.util.Arrays;
+
 public final class strings{
     public String sstring(String str, int x){
         if(str.isEmpty()){
@@ -15,6 +17,10 @@ public final class strings{
         }
 
         return str.substring(Math.max(0, x), Math.min(y, str.length()));
+    }
+
+    public String stringify(Object[] obj){
+        return Arrays.toString(obj);
     }
 
     public String combine(String... args){

@@ -24,7 +24,7 @@ extends Procedure1 {
         Object c = this.get();
         if(c == null){
             return arg;
-        } else if(c == -1){
+        } else if(c.equals(-1)){
             if(arg.toString().length() == 0){
                 return this.apply1(arg.toString());
             } else{

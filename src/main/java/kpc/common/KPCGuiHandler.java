@@ -7,7 +7,7 @@ import kpc.common.tile.TileEntityComputer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public final class KPGuiHandler
+public final class KPCGuiHandler
 implements IGuiHandler {
     public static final int GUI_TERMINAL = 0xA;
 

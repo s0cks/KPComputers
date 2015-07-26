@@ -3,7 +3,7 @@ package kpc.common.tile;
 import kpc.api.ComputerPosition;
 import kpc.api.computer.Computer;
 import kpc.common.KPComputers;
-import kpc.common.KPGuiHandler;
+import kpc.common.KPCGuiHandler;
 import kpc.common.computer.ClientComputer;
 import kpc.common.computer.ServerComputer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +40,7 @@ extends TileEntity{
     public void interact(EntityPlayer player){
         if(!player.worldObj.isRemote){
             this.createServerComputer().turnOn();
-            player.openGui(KPComputers.instance, KPGuiHandler.GUI_TERMINAL, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            player.openGui(KPComputers.instance, KPCGuiHandler.GUI_TERMINAL, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         }
     }
 

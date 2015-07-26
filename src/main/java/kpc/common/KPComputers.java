@@ -10,19 +10,26 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import kpc.api.fs.MountRegistry;
 import kpc.common.blocks.BlockComputer;
+import kpc.common.blocks.BlockIOExpander;
 import kpc.common.computer.fs.Ext9001ResourceMount;
 import kpc.common.computer.fs.Ext9001UsrMount;
 import kpc.common.core.ClientComputerRegistry;
 import kpc.common.core.ServerComputerRegistry;
+import kpc.common.entity.EntityRobit;
+import kpc.common.items.ItemRobit;
+import kpc.common.items.ItemScrewdriver;
 import kpc.common.net.KPCPacket;
 import kpc.common.net.KPCPacketHandler;
 import kpc.common.tile.TileEntityComputer;
+import kpc.common.tile.TileEntityIOExpander;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.IOException;
@@ -30,7 +37,8 @@ import java.io.IOException;
 @Mod(
             modid = KPComputers.modid,
             name = "KPComputers",
-            version = KPComputers.version
+            version = KPComputers.version,
+            useMetadata = true
 )
 public final class KPComputers{
     @Mod.Instance(KPComputers.modid)
@@ -49,20 +57,32 @@ public final class KPComputers{
     public static final ClientComputerRegistry clientComputerRegistry = new ClientComputerRegistry();
 
     public static final Block blockComputer = new BlockComputer();
+    public static final Block blockIOExpander = new BlockIOExpander();
+    public static final Item itemRobit = new ItemRobit();
+    public static final Item itemScrewdriver = new ItemScrewdriver();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
         channel = NetworkRegistry.INSTANCE.newEventDrivenChannel(KPComputers.modid);
         channel.register(new KPCPacketHandler());
+
+        proxy.init();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
+        GameRegistry.registerItem(itemScrewdriver, "itemScrewdriver");
+        GameRegistry.registerItem(itemRobit, "itemRobit");
+
         GameRegistry.registerBlock(blockComputer, "blockComputer");
+        GameRegistry.registerBlock(blockIOExpander, "blockIOExpander");
 
         GameRegistry.registerTileEntity(TileEntityComputer.class, "tileComputer");
+        GameRegistry.registerTileEntity(TileEntityIOExpander.class, "tileIOExpander");
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(KPComputers.instance, new KPGuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(KPComputers.instance, new KPCGuiHandler());
+
+        EntityRegistry.registerModEntity(EntityRobit.class, "robit", 127, KPComputers.instance, 80, 3, false);
 
         KPComputers.proxy.init();
     }
@@ -71,6 +91,7 @@ public final class KPComputers{
     public void postInit(FMLPostInitializationEvent e){
         FMLCommonHandler.instance().bus().register(KPCTickHandler.instance());
         MinecraftForge.EVENT_BUS.register(KPCTickHandler.instance());
+        MinecraftForge.EVENT_BUS.register(KPCEventHandler.instance());
     }
 
     @Mod.EventHandler

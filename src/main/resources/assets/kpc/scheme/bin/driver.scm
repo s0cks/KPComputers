@@ -1,0 +1,10 @@
+(define target (args 0))
+(define d (os:getDriver target))
+(define call (args 1))
+(cond ((string=? call "list")
+       (str:stringify (d:getMethods)))
+      ((string=? call "type")
+       (d:getType))
+      (else
+       (define newArgs (os:stripArgs args 2))
+       (d:invoke call newArgs)))

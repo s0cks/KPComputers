@@ -15,6 +15,7 @@ buildscript {
     }
 }
 
+apply plugin: 'java'
 apply plugin: 'forge'
 
 version = "1.0"
@@ -29,7 +30,16 @@ minecraft {
 dependencies {
     compile files("libs/kawa-2.0.jar")
     compile 'it.unibo.alice.tuprolog:tuprolog:2.1.1'
-    compileTest 'junit:junit:4.12'
+}
+
+sourceCompatibility = '1.7'
+
+compileJava{
+    targetCompatibility = '1.7'
+}
+
+compileApiJava{
+    targetCompatibility = '1.7'
 }
 
 processResources

@@ -1,0 +1,16 @@
+[
+  {
+    "modid":"kpc",
+    "name":"KPComputers",
+    "version":"@VERSION@",
+    "description":"Programmable computers in minecraft",
+    "logoFile":"KPCBanner.png",
+    "url":"",
+    "url":"",
+    "authors":["Asyncronous"],
+    "credits":"Special thanks to Tsukikage, raydeejay, and BBoldt",
+    "parent":"",
+    "screenshots":[],
+    "dependencies":[]
+  }
+]

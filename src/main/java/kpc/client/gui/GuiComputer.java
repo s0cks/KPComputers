@@ -132,30 +132,17 @@ extends GuiScreen{
             }
         }
 
-        if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && code == Keyboard.KEY_S){
+        if((code != Keyboard.KEY_LCONTROL)
+        && (code != Keyboard.KEY_LMENU)
+        && ChatAllowedCharacters.isAllowedCharacter(c)){
             if(computer != null){
-                computer.queueEvent("char", "__ctrls__");
-                return;
-            }
-        }
-
-        if(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && code == Keyboard.KEY_V){
-            if(computer != null){
-                computer.queueEvent("char", "__ctrlv__");
-                return;
-            }
-        }
-
-        if((code != Keyboard.KEY_LCONTROL && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) && ChatAllowedCharacters.isAllowedCharacter(c)){
-            if(computer != null){
-                computer.queueEvent("char", Character.toString(c), code);
-                return;
-            }
-        }
-
-        if(code == Keyboard.KEY_LCONTROL){
-            if(computer != null){
-                computer.queueEvent("char", "__ctrl__", Keyboard.KEY_LCONTROL);
+                computer.queueEvent(
+                                           "char",
+                                           Character.toString(c),
+                                           Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL),
+                                           Keyboard.isKeyDown(Keyboard.KEY_LMENU) || Keyboard.isKeyDown(Keyboard.KEY_RMENU),
+                                           Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)
+                );
             }
         }
     }

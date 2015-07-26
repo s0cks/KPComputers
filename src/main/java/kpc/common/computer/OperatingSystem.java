@@ -1,11 +1,14 @@
 package kpc.common.computer;
 
 import kpc.api.Signal;
+import kpc.api.driver.Driver;
 import kpc.api.fs.io.InputStream;
 import kpc.api.language.LanguageRegistry;
 import kpc.api.language.LanguageRuntime;
 import kpc.common.KPComputers;
 import kpc.common.utils.ArgsParser;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
@@ -28,6 +31,21 @@ implements kpc.api.computer.OperatingSystem{
 
     public String version(){
         return "v" + KPComputers.version;
+    }
+
+    public Object getDriver(String side){
+        TileEntity tile = this.computer.pos().tile(ForgeDirection.valueOf(side.toUpperCase()));
+        if(tile != null && tile instanceof Driver){
+            return tile;
+        } else{
+            return "No valid driver on side: " + side;
+        }
+    }
+
+    public Object[] stripArgs(Object[] args, int newIndex){
+        Object[] newArgs = new Object[args.length - newIndex];
+        System.arraycopy(args, newIndex, newArgs, 0, newArgs.length);
+        return newArgs;
     }
 
     public Object eval(String code){
